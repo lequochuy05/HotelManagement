@@ -1,0 +1,18 @@
+.h-font {
+  font-size: xx-large;
+}
+.h-line {
+  width: 150px;
+  margin: 0 auto;
+  height: 1.7px;
+}
+.pop:hover {
+  transform: scale(1.03);
+  transition: all 0.3s;
+}
+.btn {
+  background-color: #2ac1ac;
+}
+.btn:hover {
+  background-color: #45726c;
+}

@@ -1,0 +1,11 @@
+.h-font {
+  font-size: xx-large;
+}
+.h-line {
+  width: 150px;
+  margin: 0 auto;
+  height: 1.7px;
+}
+.box {
+  border-top-color: rgb(26, 15, 15) !important;
+}
