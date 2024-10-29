@@ -387,7 +387,7 @@
 <?php
 include_once("View/Footer/index.php");
 ?>
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
 <script>
     var swiper = new Swiper(".swiper-container", {
       spaceBetween: 30,
