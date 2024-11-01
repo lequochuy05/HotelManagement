@@ -1,0 +1,57 @@
+.h-font {
+  font-family: "Merienda", cursive;
+}
+.custom-bg {
+  background-color: #51d289 !important;
+}
+.custom-bg:hover {
+  background-color: #81988b !important;
+}
+
+.custom-alert {
+  position: fixed !important;
+  top: 80px;
+  right: 25px;
+}
+
+#dashboard-menu {
+  position: fixed;
+  height: 100%;
+  z-index: 11;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: red;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #b30000;
+}
+@media screen and (max-width: 992px) {
+  #dashboard-menu {
+    height: auto;
+    width: 100%;
+  }
+
+  #main-content {
+    margin-top: 60px;
+  }
+
+  .custom-alert {
+    top: 120px;
+    right: 25px;
+  }
+}
