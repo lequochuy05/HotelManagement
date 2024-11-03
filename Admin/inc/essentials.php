@@ -6,6 +6,7 @@
         // define('FEATURES_IMG_PATH', SITE_URL.'images/features/');
         define('FACILITIES_IMG_PATH', SITE_URL.'images/facilities/');
         define('ROOMS_IMG_PATH', SITE_URL.'images/rooms/');
+        define('USERS_IMG_PATH', SITE_URL.'images/users/');
 
         define('UPLOAD_IMAGE_PATH', $_SERVER['DOCUMENT_ROOT'].'/HotelManagement/images/');
         define('ABOUT_FOLDER','about/');
@@ -13,6 +14,12 @@
         // define('FEATURES_FOLDER','features/');
         define('FACILITIES_FOLDER','facilities/');
         define('ROOMS_FOLDER','rooms/');
+        define('USERS_FOLDER','users/');
+        
+
+        define('SENDGRID_API_KEY',"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");
+        define('SENDGRID_EMAIL',"lehuy2425@gmail.com");
+        define('SENDGRID_NAME',"ONIX_WEB");
 
 
     function adminLogin(){
@@ -93,4 +100,43 @@
         }
         
     }
+
+    function uploadUserImage($image) {
+        $valid_mime = ['image/jpeg', 'image/png', 'image/webp'];
+        $img_mime = $image['type'];
+    
+        if (!in_array($img_mime, $valid_mime)) {
+            return 'inv_img';
+        } else {
+            $ext = pathinfo($image['name'], PATHINFO_EXTENSION);
+            $rname = 'IMG_' . random_int(11111, 99999) . ".jpeg";
+            $img_path = UPLOAD_IMAGE_PATH . USERS_FOLDER . $rname;
+    
+            // Khởi tạo biến ảnh dựa vào định dạng file
+            if ($ext == 'png' || $ext == 'PNG') {
+                $img = @imagecreatefrompng($image['tmp_name']);
+            } elseif ($ext == 'webp' || $ext == 'WEBP') {
+                $img = @imagecreatefromwebp($image['tmp_name']);
+            } else {
+                $img = @imagecreatefromjpeg($image['tmp_name']);
+            }
+    
+            // Kiểm tra nếu không tạo được ảnh
+            if (!$img) {
+                return 'inv_img'; // Trả về lỗi nếu file ảnh không hợp lệ
+            }
+    
+            // Lưu ảnh dưới dạng JPEG
+            if (imagejpeg($img, $img_path, 75)) {
+                imagedestroy($img); // Giải phóng bộ nhớ sau khi xử lý ảnh
+                return $rname;
+            } else {
+                return 'upd_failed';
+            }
+        }
+    }
+    
+
+
+
     ?>

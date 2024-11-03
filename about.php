@@ -5,13 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="Shortcut icon" href="images/logo.png">
-    <title>ONIX HOTEL - ABOUT</title>
+   
     <?php 
             require_once("inc/links.php");
-            require_once("inc/scripts.php");
     ?>
     <link rel="stylesheet" href="Css/common.css">
-
+    <title><?php echo $settings_result['site_title'] ?> - ABOUT</title>
    </head>
 <body class="bg-light">
     <?php include("inc/header.php"); ?>
@@ -112,7 +111,7 @@
 <?php
 include_once("inc/footer.php");
 ?>
- 
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
     var swiper = new Swiper(".mySwiper", {
         slidesPerView: 4,

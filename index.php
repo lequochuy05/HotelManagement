@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="Shortcut icon" href="images/logo.png">
-    <title>ONIX</title>
+   
     <?php   
         require_once("inc/links.php"); 
-        require_once("inc/scripts.php");
     ?>
+     <title><?php echo $settings_result['site_title'] ?></title>
     <link rel="stylesheet" href="Css/common.css">
    </head>
 <body class="bg-light">
@@ -88,194 +88,106 @@
 <h2 class="mt-5 pt-4 mb-4 text-center fw-bold h-font">OUR ROOMS</h2>
 <div class="container">
     <div class="row">
-    <div class="col-lg-4 col-md-6 my-3">
-            <div class="card border-0 shadow" style="max-width: 350px; margin: auto;">
-            <img src="images/rooms/1.png" class="card-img-top">
-                <div class="card-body">
-                    <h5>Room 1</h5>
-                    <h6 class="mb-4">$15</h6>
-                    <div class="features mb-4">
-                        <h6 class="mb-1">Features</h6>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
-                        2 Rooms 
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
-                        2 Bathroom 
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
-                        1 Balcony 
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
-                        1 Sofa 
-                        </span>
+
+        <?php
+            $sql = "SELECT * FROM rooms WHERE status=? AND removed = ? ORDER BY id ASC LIMIT 3";
+            $room_res = select($sql, [1,0],'ii');
+            while($room_data = mysqli_fetch_assoc($room_res))
+            {
+                #get features of room
+                $sql_fea = "SELECT f.name FROM features f 
+                        INNER JOIN room_features rfea ON f.id = rfea.features_id
+                        WHERE rfea.room_id = '$room_data[id]'";
+
+                $fea_q = mysqli_query($conn, $sql_fea);
+                $features_data = "";
+                while($fea_row = mysqli_fetch_assoc($fea_q))
+                {
+                    $features_data .= "<span class='badge rounded-pill bg-light text-dark text-wrap me-1 mb-1'>
+                                            $fea_row[name]
+                                        </span>";
+
+                }
+                
+                    #get facilities of room
+                    $sql_fac = "SELECT f.name FROM facilities f 
+                    INNER JOIN room_facilities rfac ON f.id = rfac.facilities_id
+                    WHERE rfac.room_id = '$room_data[id]'";
+
+                $fac_q = mysqli_query($conn, $sql_fac);
+                $facilities_data = "";
+                while($fac_row = mysqli_fetch_assoc($fac_q))
+                {
+                    $facilities_data .= "<span class='badge rounded-pill bg-light text-dark text-wrap me-1 mb-1'>
+                                            $fac_row[name]
+                                        </span>";
+
+                }
+
+                #get room thumbnail of room
+                $room_thumb = ROOMS_IMG_PATH."thumbnail.jpg";
+                $sql_thumb = "SELECT * FROM room_images 
+                                WHERE room_id = '$room_data[id]' 
+                                AND thumb= '1'";
+                $thumb_q = mysqli_query($conn, $sql_thumb);
+                if(mysqli_num_rows($thumb_q)>0){
+                    $thumb_res = mysqli_fetch_assoc($thumb_q);
+                    $room_thumb = ROOMS_IMG_PATH.$thumb_res['image'];
+                }
+
+                $book_btn = "";
+
+                if(!$settings_result['shutdown']){
+                    $book_btn= "<a href='#' class='btn btn-sm text-white custom-bg shadow-none'>Book Now</a>";
+                }
+
+                #print room cards
+                echo<<<data
+                    <div class="col-lg-4 col-md-6 my-3">
+                        <div class="card border-0 shadow" style="max-width: 350px; margin: auto;">
+                        <img src="$room_thumb" class="card-img-top">
+                            <div class="card-body">
+                                <h5>$room_data[name]</h5>
+                                <h6 class="mb-4">$$room_data[price]</h6>
+                                <div class="features mb-4">
+                                    <h6 class="mb-1">Features</h6>
+                                    $features_data
+                                </div>
+                                <div class="facilities mb-4">
+                                    <h6 class="mb1-">Facilities</h6>
+                                    $facilities_data
+                                </div>
+                                <div class="guests mb-4">
+                                    <h6 class="mb1-">Guests</h6>
+                                    <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
+                                        $room_data[adult] Adult
+                                    </span>
+                                    <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
+                                        $room_data[children] Children
+                                    </span>
+                                </div>
+                                <div class="rating mb-4">
+                                    <h6 class="mb-1">Rating</h6>
+                                    <span class="badge rounded-pill bg-light">
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                    </span>
+                                </div>
+                                <div class="d-flex justify-content-evenly mb-2">
+                                    $book_btn
+                                    <a href="room_details.php?id=$room_data[id]" class="btn btn-sm btn-outline-dark shadow-none">Details</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="facilities mb-4">
-                        <h6 class="mb1-">Facilities</h6>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
-                        Wifi 
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
-                        Television
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
-                        Air conditioner 
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
-                        Refrigerator 
-                        </span>
-                    </div>
-                    <div class="facilities mb-4">
-                        <h6 class="mb1-">Guests</h6>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
-                        5 Adust 
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
-                        3 Children
-                        </span>
-                    </div>
-                    <div class="rating mb-4">
-                        <h6 class="mb-1">Rating</h6>
-                        <span class="badge rounded-pill bg-light">
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                        </span>
-                    </div>
-                    <div class="d-flex justify-content-evenly mb-2">
-                        <a href="#" class="btn btn-sm text-white shadow-none" style="background-color: #2ec1ac;">Book Now</a>
-                        <a href="#" class="btn btn-sm btn-outline-dark shadow-none">Details</a>
-                    </div>
-                    </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-6 my-3">
-            <div class="card border-0 shadow" style="max-width: 350px; margin: auto;">
-            <img src="images/rooms/2.png" class="card-img-top">
-                <div class="card-body">
-                    <h5>Room 2</h5>
-                    <h6 class="mb-4">$25</h6>
-                    <div class="features mb-4">
-                        <h6 class="mb-1">Features</h6>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
-                        2 Rooms 
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
-                        2 Bathroom 
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
-                        1 Balcony 
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
-                        1 Sofa 
-                        </span>
-                    </div>
-                    <div class="facilities mb-4">
-                        <h6 class="mb1-">Facilities</h6>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
-                        Wifi 
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
-                        Television
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
-                        Air conditioner 
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
-                        Refrigerator 
-                        </span>
-                    </div>
-                    <div class="facilities mb-4">
-                        <h6 class="mb1-">Guests</h6>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
-                        5 Adust 
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
-                        3 Children
-                        </span>
-                    </div>
-                    <div class="rating mb-4">
-                        <h6 class="mb-1">Rating</h6>
-                        <span class="badge rounded-pill bg-light">
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                        </span>
-                    </div>
-                    <div class="d-flex justify-content-evenly mb-2">
-                        <a href="#" class="btn btn-sm text-white shadow-none" style="background-color: #2ec1ac;">Book Now</a>
-                        <a href="#" class="btn btn-outline-dark shadow-none">Details</a>
-                    </div>
-                    </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-6 my-3">
-            <div class="card border-0 shadow" style="max-width: 350px; margin: auto;">
-            <img src="images/rooms/3.png" class="card-img-top">
-                <div class="card-body">
-                    <h5>Room 3</h5>
-                    <h6 class="mb-4">$25</h6>
-                    <div class="features mb-4">
-                        <h6 class="mb-1">Features</h6>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
-                        2 Rooms 
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
-                        2 Bathroom 
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
-                        1 Balcony 
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
-                        1 Sofa 
-                        </span>
-                    </div>
-                    <div class="facilities mb-4">
-                        <h6 class="mb1-">Facilities</h6>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
-                        Wifi 
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
-                        Television
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
-                        Air conditioner 
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
-                        Refrigerator 
-                        </span>
-                    </div>
-                    <div class="facilities mb-4">
-                        <h6 class="mb1-">Guests</h6>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
-                        5 Adust 
-                        </span>
-                        <span class="badge rounded-pill bg-light text-dark text-wrap lh-base">
-                        3 Children
-                        </span>
-                    </div>
-                    <div class="rating mb-4">
-                        <h6 class="mb-1">Rating</h6>
-                        <span class="badge rounded-pill bg-light">
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                        </span>
-                    </div>
-                    <div class="d-flex justify-content-evenly mb-2">
-                        <a href="#" class="btn btn-sm text-white shadow-none" style="background-color: #2ec1ac;">Book Now</a>
-                        <a href="#" class="btn btn-outline-dark shadow-none">Details</a>
-                    </div>
-                    </div>
-            </div>
-        </div>
-        
+                data;
+            }
+
+        ?>
         <div class="col-lg-12 text-center mt-5">
-            <a href="#" class="btn btn-sm btn-outline-dark rounded-0 fw-bold shadow-none">More Rooms >>></a>
+            <a href="rooms.php" class="btn btn-sm btn-outline-dark rounded-0 fw-bold shadow-none">More Rooms >>></a>
         </div>
     </div>
 </div>
@@ -284,28 +196,23 @@
 <h2 class="mt-5 pt-4 mb-4 text-center fw-bold h-font">OUR FACILITIES</h2>
 <div class="container">
     <div class="row justify-content-evenly px-lg-0 px-md-0 px-5">
-        <div class="col-lg-2 col-md-2 text-center bg-white rounded shadow py-4 my-3">
-            <img src="images/features/wifi.svg" width="80px">
-            <h5 class="mt-3">Wifi</h5>
-        </div>
-        <div class="col-lg-2 col-md-2 text-center bg-white rounded shadow py-4 my-3">
-            <img src="images/features/cooker.svg" width="80px">
-            <h5 class="mt-3">Cooker</h5>
-        </div>
-        <div class="col-lg-2 col-md-2 text-center bg-white rounded shadow py-4 my-3">
-            <img src="images/features/serve.svg" width="80px">
-            <h5 class="mt-3">Serve</h5>
-        </div>
-        <div class="col-lg-2 col-md-2 text-center bg-white rounded shadow py-4 my-3">
-            <img src="images/features/telephone.svg" width="80px">
-            <h5 class="mt-3">Telephone</h5>
-        </div>
-        <div class="col-lg-2 col-md-2 text-center bg-white rounded shadow py-4 my-3">
-            <img src="images/features/employee.svg" width="80px">
-            <h5 class="mt-3">Employee</h5>
-        </div>
+        <?php
+            $result = mysqli_query($conn, "SELECT * FROM facilities ORDER BY id DESC LIMIT 5");
+            $path = FACILITIES_IMG_PATH;
+
+            while($row = mysqli_fetch_assoc($result)){
+                echo<<<data
+                    <div class="col-lg-2 col-md-2 text-center bg-white rounded shadow py-4 my-3">
+                        <img src="$path$row[icon]" width="80px">
+                        <h5 class="mt-3">$row[name]</h5>
+                    </div>
+                    
+                data;
+            }
+        ?>
+
         <div class="col-lg-12 text-center mt-5">
-            <a href="#" class="btn btn-sm btn-outline-dark rounded-0 fw-bold shadow-none">More Facilities >>></a>
+            <a href="facilities.php" class="btn btn-sm btn-outline-dark rounded-0 fw-bold shadow-none">More Facilities >>></a>
         </div>
     </div>
 </div>
@@ -372,9 +279,126 @@
                   
                 </div>
             </div>
+            <div class="swiper-slide bg-white p-4"> 
+                <div class="profile d-flex align-items-center p-4">
+                    <img src="images/features/man.svg" width="30px">
+                    <h6 class="m-0 ms-2">User3</h6>
+                </div>
+                <p>
+                    Khách sạn có không gian sang trọng, hiện đại cùng với đội ngũ nhân viên phục vụ tận tâm, chu đáo. 
+                    Phòng ốc sạch sẽ, tiện nghi đầy đủ, mang đến cảm giác thoải mái và dễ chịu. 
+                    Đây chắc chắn là nơi nghỉ dưỡng lý tưởng cho những ai muốn trải nghiệm dịch vụ cao cấp.
+                
+                </p>
+                <div class="rating">
+                    <i class="bi bi-star-fill text-warning"></i>
+                    <i class="bi bi-star-fill text-warning"></i>
+                    <i class="bi bi-star-fill text-warning"></i>
+                    <i class="bi bi-star-fill text-warning"></i>
+                  
+                </div>
+            </div>
+            <div class="swiper-slide bg-white p-4"> 
+                <div class="profile d-flex align-items-center p-4">
+                    <img src="images/features/man.svg" width="30px">
+                    <h6 class="m-0 ms-2">User3</h6>
+                </div>
+                <p>
+                    Khách sạn có không gian sang trọng, hiện đại cùng với đội ngũ nhân viên phục vụ tận tâm, chu đáo. 
+                    Phòng ốc sạch sẽ, tiện nghi đầy đủ, mang đến cảm giác thoải mái và dễ chịu. 
+                    Đây chắc chắn là nơi nghỉ dưỡng lý tưởng cho những ai muốn trải nghiệm dịch vụ cao cấp.
+                
+                </p>
+                <div class="rating">
+                    <i class="bi bi-star-fill text-warning"></i>
+                    <i class="bi bi-star-fill text-warning"></i>
+                    <i class="bi bi-star-fill text-warning"></i>
+                    <i class="bi bi-star-fill text-warning"></i>
+                  
+                </div>
+            </div>
+            <div class="swiper-slide bg-white p-4"> 
+                <div class="profile d-flex align-items-center p-4">
+                    <img src="images/features/man.svg" width="30px">
+                    <h6 class="m-0 ms-2">User3</h6>
+                </div>
+                <p>
+                    Khách sạn có không gian sang trọng, hiện đại cùng với đội ngũ nhân viên phục vụ tận tâm, chu đáo. 
+                    Phòng ốc sạch sẽ, tiện nghi đầy đủ, mang đến cảm giác thoải mái và dễ chịu. 
+                    Đây chắc chắn là nơi nghỉ dưỡng lý tưởng cho những ai muốn trải nghiệm dịch vụ cao cấp.
+                
+                </p>
+                <div class="rating">
+                    <i class="bi bi-star-fill text-warning"></i>
+                    <i class="bi bi-star-fill text-warning"></i>
+                    <i class="bi bi-star-fill text-warning"></i>
+                    <i class="bi bi-star-fill text-warning"></i>
+                  
+                </div>
+            </div>
+            <div class="swiper-slide bg-white p-4"> 
+                <div class="profile d-flex align-items-center p-4">
+                    <img src="images/features/man.svg" width="30px">
+                    <h6 class="m-0 ms-2">User3</h6>
+                </div>
+                <p>
+                    Khách sạn có không gian sang trọng, hiện đại cùng với đội ngũ nhân viên phục vụ tận tâm, chu đáo. 
+                    Phòng ốc sạch sẽ, tiện nghi đầy đủ, mang đến cảm giác thoải mái và dễ chịu. 
+                    Đây chắc chắn là nơi nghỉ dưỡng lý tưởng cho những ai muốn trải nghiệm dịch vụ cao cấp.
+                
+                </p>
+                <div class="rating">
+                    <i class="bi bi-star-fill text-warning"></i>
+                    <i class="bi bi-star-fill text-warning"></i>
+                    <i class="bi bi-star-fill text-warning"></i>
+                    <i class="bi bi-star-fill text-warning"></i>
+                  
+                </div>
+            </div>
+            <div class="swiper-slide bg-white p-4"> 
+                <div class="profile d-flex align-items-center p-4">
+                    <img src="images/features/man.svg" width="30px">
+                    <h6 class="m-0 ms-2">User3</h6>
+                </div>
+                <p>
+                    Khách sạn có không gian sang trọng, hiện đại cùng với đội ngũ nhân viên phục vụ tận tâm, chu đáo. 
+                    Phòng ốc sạch sẽ, tiện nghi đầy đủ, mang đến cảm giác thoải mái và dễ chịu. 
+                    Đây chắc chắn là nơi nghỉ dưỡng lý tưởng cho những ai muốn trải nghiệm dịch vụ cao cấp.
+                
+                </p>
+                <div class="rating">
+                    <i class="bi bi-star-fill text-warning"></i>
+                    <i class="bi bi-star-fill text-warning"></i>
+                    <i class="bi bi-star-fill text-warning"></i>
+                    <i class="bi bi-star-fill text-warning"></i>
+                  
+                </div>
+            </div>
+            <div class="swiper-slide bg-white p-4"> 
+                <div class="profile d-flex align-items-center p-4">
+                    <img src="images/features/man.svg" width="30px">
+                    <h6 class="m-0 ms-2">User3</h6>
+                </div>
+                <p>
+                    Khách sạn có không gian sang trọng, hiện đại cùng với đội ngũ nhân viên phục vụ tận tâm, chu đáo. 
+                    Phòng ốc sạch sẽ, tiện nghi đầy đủ, mang đến cảm giác thoải mái và dễ chịu. 
+                    Đây chắc chắn là nơi nghỉ dưỡng lý tưởng cho những ai muốn trải nghiệm dịch vụ cao cấp.
+                
+                </p>
+                <div class="rating">
+                    <i class="bi bi-star-fill text-warning"></i>
+                    <i class="bi bi-star-fill text-warning"></i>
+                    <i class="bi bi-star-fill text-warning"></i>
+                    <i class="bi bi-star-fill text-warning"></i>
+                  
+                </div>
+            </div>
             
         </div>
         <div class="swiper-pagination"></div>
+    </div>
+    <div class="col-lg-12 text-center mt-5">
+        <a href="about.php" class="btn btn-sm btn-outline-dark rounded-0 fw-bold shadow-none">Know More >>></a>
     </div>
 </div>
 
@@ -437,11 +461,70 @@
     </div>
 </div>
 
+<!-- Password Reset -->
+<div class="modal fade" id="recoveryModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="recovery-form">
+        <div class="modal-header">
+          <h5 class="modal-title d-flex align-items-center"><i class="bi bi-shield-lock fs-3 me-2"></i> Set up New Password</h5>
+          <button type="reset" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <span class="badge rounded-pill bg-light text-dark mb-3 text-wrap lh-base">
+            Note: A link will be sent to your email to reset your password!
+          </span>
+          <div class="mb-4">
+            <label class="form-label">New Password</label>
+            <input type="password" name="pass" class="form-control shadow-none" required>           
+            <input type="hidden" name="email">
+            <input type="hidden" name="token">
+        </div>
+        
+          <div class="mb-2 text-end">
+            <button type="button" class="btn shadow-none me-2"data-bs-dismiss="modal">
+                Cancel
+            </button>
+            <button type="submit" class="btn btn-dark shadow-none">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
 <!-- Footer -->
 <?php
 include_once("inc/footer.php");
 ?>
 
+<?php
+    if(isset($_GET['account_recovery'])){
+        $data = filteration($_GET);
+
+        $t_date = date("Y-m-d");
+        $q = select("SELECT * FROM taikhoanuser WHERE email =? AND token=? AND t_expire=? LIMIT 1",
+                    [$data['email'],$data['token'],$t_date],'sss');
+        if(mysqli_num_rows($q)==1){
+            echo<<<showModal
+                <script>
+                    var myModal = document.getElementById('recoveryModal');
+                    
+                    
+                    myModal.querySelector("input[name='email']").value = '$data[email]';
+                    myModal.querySelector("input[name='token']").value = '$data[token]';
+   
+                    var modal = bootstrap.Modal.getOrCreateInstance(myModal);
+                    modal.show();   
+                </script>
+            showModal;
+        }else{
+            alert("error", "Invalid or Expired Link!");
+        }
+    }
+?>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
     var swiper = new Swiper(".swiper-container", {
       spaceBetween: 30,
@@ -485,7 +568,41 @@ include_once("inc/footer.php");
         }
       }
     });
-  </script>
+
+    //Recover account
+    let recovery_form = document.getElementById('recovery-form');
+
+    recovery_form.addEventListener('submit', (e)=>{
+        e.preventDefault();
+
+        let data = new FormData();
+        data.append('email',recovery_form.elements['email'].value); 
+        data.append('token',recovery_form.elements['token'].value);
+        data.append('pass',recovery_form.elements['pass'].value);    
+        data.append('recover_user','');
+        
+        var myModal = document.getElementById("recoveryModal");
+        var modal = bootstrap.Modal.getInstance(myModal);
+        modal.hide();
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "ajax/login_register.php", true);
+    
+
+        xhr.onload = function() {
+            let responseText = this.responseText.trim();
+            if(responseText === 'failed') {
+                alert('error', "Account reset failed!");
+            } else {
+                alert('success', "Account reset successful!");
+                recovery_form.reset();
+                
+            }
+        }
+        xhr.send(data); 
+        
+    });
+</script>
 </body>
 </html>
 

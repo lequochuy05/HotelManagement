@@ -26,12 +26,13 @@ input[type="number"] {
 .box {
   border-top-color: rgb(26, 15, 15) !important;
 }
-.btn {
-  background-color: #2ac1ac;
+.custom-bg {
+  background-color: #51d289 !important;
 }
-.btn:hover {
-  background-color: #45726c;
+.custom-bg:hover {
+  background-color: #81988b !important;
 }
+
 .availability-form {
   margin-top: -50px;
   z-index: 2;
@@ -69,4 +70,5 @@ input[type="number"] {
   position: fixed !important;
   top: 80px;
   right: 25px;
+  z-index: 2;
 }

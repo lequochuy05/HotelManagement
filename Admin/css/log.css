@@ -252,7 +252,7 @@ main {
 }
 
 .custom-alert {
-  position: fixed;
+  position: fixed !important;
   top: 25px;
   right: 25px;
 }

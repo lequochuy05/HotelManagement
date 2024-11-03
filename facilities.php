@@ -5,13 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="Shortcut icon" href="images/logo.png">
-    <title>ONIX HOTEL - FACILITIES</title>
+    
     <?php 
             require_once("inc/links.php");
-            require_once("inc/scripts.php");
     ?>
     <link rel="stylesheet" href="Css/common.css">
-   
+    <title><?php echo $settings_result['site_title'] ?> - FACILITIES</title>
 
    </head>
 <body class="bg-light">

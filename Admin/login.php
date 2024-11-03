@@ -14,7 +14,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/log.css">
     <link rel="Shortcut icon" href="images/logo.png">
-    <?php require_once("inc/links.php") ?>
+    <?php require("inc/links.php");
+          require("inc/scripts.php");
+    ?>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -22,47 +24,10 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <title>LOGIN</title>
+    <title>ADMIN - LOGIN</title>
   </head>
   
   <body>
-  <?php
-    require_once 'vendor/autoload.php';
-
-    // init configuration
-    $clientID ='910282067487-tfn81757uhj5ghrpb96h5as72h6uvdta.apps.googleusercontent.com';
-    $clientSecret = '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';
-    $redirectUri = 'http://localhost/HotelManagement/Admin/login.php';
-
-    // create Client Request to access Google API
-    $client = new Google_Client();
-    $client->setClientId($clientID);
-    $client->setClientSecret($clientSecret);
-    $client->setRedirectUri($redirectUri);
-    $client->addScope("email");
-    $client->addScope("profile");
-
-    // authenticate code from Google OAuth Flow
-    if (isset($_GET['code'])) {
-      $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
-      $client->setAccessToken($token['access_token']);
-
-      // get profile info
-      $google_oauth = new Google_Service_Oauth2($client);
-      $google_account_info = $google_oauth->userinfo->get();
-      $email =  $google_account_info->email;
-      $name =  $google_account_info->name;
-    ?>
-<div class="container">
-  <div class="box">
-    <div class="form-group">
-      <!-- <label  for="email">Email: <?php echo $email;  ?> </label> <br>
-      <label  for="name">Name: <?php echo $name;  ?> </label> -->
-    </div>
-  </div>
-</div>
-<?php
-} else { ?>
     <div class="container">
       <header>
         <div id="head1">
@@ -77,7 +42,7 @@
         </div>
       </header>
       <main>
-        <div class="main1"><img src="images/ONIX.png" alt="" /></div>
+        <div class="main1"><img src="images/ONIX.png"/></div>
         <div class="main2">
           <form method="POST">
             <div class="head">Login</div>
@@ -98,7 +63,7 @@
                     <i class="fab fa-facebook-f"></i> Sign in with Facebook
                   </button>
                   <button class="btn-google">
-                    <i class="fab fa-google"></i><a href="<?php echo $client->createAuthUrl() ?>">Sign in with Google</a>
+                    <i class="fab fa-google"></i> Sign in with Google
                   </button>
                   <button class="btn-twitter">
                     <i class="fab fa-twitter"></i> Sign in with Twitter
@@ -110,28 +75,23 @@
         </div>
       </main>
     </div>
-    <?php } ?>
+  <?php  
+    if(isset($_POST['login'])){
+      $frm_data = filteration($_POST);
+      
+      $sql = "SELECT * FROM taikhoanadmin WHERE username = ? AND password = ?";
+      $values = [$frm_data['admin_name'],$frm_data['admin_pass']];
 
-  <?php
-  
-  if(isset($_POST['login'])){
-    $frm_data = filteration($_POST);
-    
-    $sql = "SELECT * FROM taikhoanadmin WHERE username = ? AND password = ?";
-    $values = [$frm_data['admin_name'],$frm_data['admin_pass']];
-
-    $result = select($sql, $values, "ss");
-    if(!$result->num_rows > 0){
-      alert('error', 'Login failed - Incorrect username or password');
-    }else{
-      $row = mysqli_fetch_assoc($result);
-      $_SESSION['adminLogin'] = true;
-      $_SESSION['adminId'] = $row['username'];
-      redirect('dashboard.php');
+      $result = select($sql, $values, "ss");
+      if(!$result->num_rows > 0){
+        alert('error', 'Login failed - Incorrect username or password');
+      }else{
+        $row = mysqli_fetch_assoc($result);
+        $_SESSION['adminLogin'] = true;
+        $_SESSION['adminId'] = $row['username'];
+        redirect('dashboard.php');
+      }
     }
-  }
-
-
-?>
+  ?>
   </body>
 </html>
