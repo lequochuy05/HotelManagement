@@ -14,22 +14,37 @@
                 <div class="collapse navbar-collapse flex-column align-items-stretch mt-2" id="adminDropdown">
                     <ul class="nav nav-pills flex-column">
                         <li class="nav-item">
-                            <a class="nav-link"href="dashboard.php">Dashboard</a>
+                            <a class="nav-link text-white"href="dashboard.php">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="users.php">Users</a>
+                            <button class="btn text-white px-3 w-100 shadow-none text-start d-flex align-items-center justify-content-between" type="button" data-bs-toggle="collapse" data-bs-target="#bookingLinks">
+                                <span>Bookings</span>
+                                <span><i class="bi bi-caret-down-fill"></i></span>
+                            </button>
+                            <div class="collapse show px-3 small mb-1" id="bookingLinks">
+                                <ul class="nav nav-pills flex-column rounded border-secondary">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="new_bookings.php">New Bookings</a>
+                                    </li>
+                                    
+                                   
+                                </ul>
+                            </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="rooms.php">Rooms</a>
+                            <a class="nav-link text-white" href="users.php">Users</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="features_facilities.php">Features & Facilities</a>
+                            <a class="nav-link text-white" href="rooms.php">Rooms</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="user_queries.php">User Query</a>
+                            <a class="nav-link text-white" href="features_facilities.php">Features & Facilities</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="settings.php">Setting</a>
+                            <a class="nav-link text-white" href="user_queries.php">User Query</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="settings.php">Setting</a>
                         </li>
                         
                     </ul>   
@@ -37,3 +52,23 @@
             </div>
         </nav>
     </div>
+
+
+    <script>
+        function setActive(){
+        let navbar = document.getElementById('dashboard-menu');
+        let a_tags = navbar.getElementsByTagName('a');
+
+        for(i=0; i<a_tags.length;i++){
+            let file = a_tags[i].href.split('/').pop();
+            let file_name = file.split('.')[0];
+
+            if(document.location.href.indexOf(file_name)>=0){
+                a_tags[i].classList.add('active');
+            }
+        }
+    }
+
+
+    setActive();
+    </script>

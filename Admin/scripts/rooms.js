@@ -302,5 +302,4 @@ function remove_room(room_id) {
 
 window.onload = function () {
   get_all_rooms();
-  // get_room_images();
 };

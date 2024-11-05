@@ -39,23 +39,18 @@
                             
                         </div>
                         
-                        <div class="table-responsive" style="height: 480px; overflow-y:scroll">
-                            <table class="table table-hover border text-center" style="min-width: 1300px">
+                        <div class="table-responsive">
+                            <table class="table table-hover border-2">
                                 <thead>
                                     <tr class="bg-dark text-light">
                                         <th scope="col">#</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Email</th>
-                                        <th scope="col">Phone</th>
-                                        <th scope="col">Location</th>
-                                        <th scope="col">DOB</th>
-                                        <th scope="col">Verified</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Date</th>
+                                        <th scope="col">User Details</th>
+                                        <th scope="col">Room Details</th>
+                                        <th scope="col">Booking Details</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
-                                <tbody id="users-data">
+                                <tbody id="table-data">
                                    
                                 </tbody>
                             </table>
@@ -67,6 +62,36 @@
     </div>
   
 
-    <script src="scripts/users.js"></script>
+
+    <!-- Assign Room Number modal -->
+    <div class="modal fade" id="assign-room" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form id="assign-room-form">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Assign Room</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Room Number</label>
+                            <input type="text" name="room_no" class="form-control shadow-none" required>
+                        </div>
+                        <span class="badge rounded-pill bg-light text-dark mb-3 text-wrap lh-base">
+                            Note: Assign Room Number only when user has been arrived!
+                        </span>
+                        <input type="hidden" name="booking_id">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn text-secondary shadow-none" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn custom-bg text-white shadow-none">Assign</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    <script src="scripts/new_bookings.js"></script>
 </body>
 </html>
