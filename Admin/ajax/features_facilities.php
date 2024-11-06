@@ -39,13 +39,13 @@
         $frm_data = filteration($_POST);
         $values =  [$frm_data['rem_feature']];
        
-        $check_q = select('SELECT * FROM room_features WHERE features_id = ?', [$frm_data[' ']], 'i');
+        $check_q = select('SELECT * FROM room_features WHERE features_id = ?', [$frm_data['rem_feature']], 'i');
         if(mysqli_num_rows($check_q)==0){
             $sql = "DELETE FROM features WHERE id =?";
             $result = delete($sql, $values, 'i');
             echo $result; 
         }else{
-            echo "room_added";
+            echo 'room_added';
         }
     
     }

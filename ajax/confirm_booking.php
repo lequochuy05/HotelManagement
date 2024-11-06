@@ -44,13 +44,16 @@
         $check_in = $frm_data['check_in'];
         $check_out = $frm_data['check_out'];
 
-        $query = "SELECT * FROM booking_order WHERE room_id = ? AND ((check_in <= ? AND check_out >= ?) OR (check_in <= ? AND check_out >= ?))";
+        $query = "SELECT * FROM booking_order WHERE room_id = ? AND booking_status != 'cancelled'
+            AND ((check_in BETWEEN ? AND ?) 
+            OR (check_out BETWEEN ? AND ?)
+            OR (? BETWEEN check_in AND check_out)
+            OR (? BETWEEN check_in AND check_out))";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("issss", $room_id, $check_out, $check_in, $check_in, $check_out);
+        $stmt->bind_param("issssss", $room_id, $check_in, $check_out, $check_in, $check_out, $check_in, $check_out);
         $stmt->execute();
         $result = $stmt->get_result();
 
-        //Check booking availability if status is blank else return error
         if($result->num_rows > 0) {
             echo json_encode(['status' => 'unavailable']);
             exit; 

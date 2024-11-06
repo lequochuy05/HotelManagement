@@ -2,7 +2,7 @@
     require("inc/links.php"); 
   
 
-    if(!(isset($_SESSION['login']) || $_SESSION['login'] == true)){
+    if(!(isset($_SESSION['login']) && $_SESSION['login'] == true)){
         redirect('index.php');
     }
 
@@ -211,6 +211,9 @@
             <div>
                 <p class="mt-5">
                     <a class="text-decoration-none ms-3" href="index.php"><i class="bi bi-house-door"></i> Home</a>
+                
+
+                    <a id="book_page" class= "text-decoration-none ms-3" href="bookings.php">Go to booking page <i class="bi bi-arrow-right"></i></a>
                 </p>
                 
             </div>
@@ -221,6 +224,7 @@
 
       <script>
             $(document).ready(function() {
+                $("#book_page").hide();
                 $("#hoa-don").hide();
                 setTimeout(function() {
                     $("#checkout_box").hide();
@@ -230,7 +234,7 @@
                     
                     $("#order-info").hide();
                     $("#hoa-don").show();
-
+                    $("#book_page").show();
 
                     setTimeout(function() {
                         window.location.href = 'index.php';

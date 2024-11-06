@@ -32,7 +32,6 @@ function add_feature() {
   xhr.send(data);
 }
 
-function get_features() {
   let xhr = new XMLHttpRequest();
   xhr.open("POST", "ajax/features_facilities.php", true);
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -49,15 +48,13 @@ function rem_feature(val) {
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
   xhr.onload = function () {
-    // console.log("Server response for rem_feature:", this.responseText); // Log server response
-
     if (this.responseText == 1) {
       alert("success", "Feature Removed!");
       get_features();
-    } else if (this.responseText == "room_added") {
+    } else if (this.responseText.trim == "room_added") {
       alert("error", "Feature is added in room!");
     } else {
-      alert("error", "Server Down");
+      alert("error", "Server Down!");
     }
   };
 

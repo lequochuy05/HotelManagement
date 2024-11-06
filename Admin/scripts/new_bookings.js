@@ -1,4 +1,4 @@
-function get_bookings() {
+function get_bookings(search = "") {
   let xhr = new XMLHttpRequest();
   xhr.open("POST", "ajax/new_bookings.php", true);
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -6,7 +6,7 @@ function get_bookings() {
   xhr.onload = function () {
     document.getElementById("table-data").innerHTML = this.responseText;
   };
-  xhr.send("get_bookings");
+  xhr.send("get_bookings&search=" + search);
 }
 
 let assign_room_form = document.getElementById("assign-room-form");
@@ -54,7 +54,7 @@ function cancel_booking(id) {
 
     xhr.onload = function () {
       if (this.responseText == 1) {
-        alert("success", "Booking canceled!");
+        alert("success", "Booking cancelled!");
         get_bookings();
       } else {
         alert("error", "Server Down");

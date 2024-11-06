@@ -7,12 +7,22 @@
 
     if(isset($_POST['get_bookings']))
     {
+        $frm_data = filteration($_POST);
+
         $q = "SELECT bo.*, bd.* FROM booking_order bo
                 INNER JOIN booking_details bd ON bo.booking_id = bd.booking_id
-                WHERE bo.booking_status = 'booked' AND bo.arrival = 0 ORDER BY bo.booking_id ASC";
-        $res = mysqli_query($conn, $q);
+                WHERE (bo.order_id LIKE ? OR bd.phonenum LIKE ? OR bd.user_name LIKE ?)
+                AND (bo.booking_status = ? AND bo.arrival = ?) ORDER BY bo.booking_id ASC";
+
+        $res = select($q, ["%$frm_data[search]%", "%$frm_data[search]%", "%$frm_data[search]%", "booked", 0], "sssss");
+
         $i=1;
         $table_data = "";
+        
+        if(mysqli_num_rows($res)==0){
+            echo "<b>No Data Found</b>";
+            exit;
+        }
 
         while($data = mysqli_fetch_assoc($res)){
             $date = date("d-m-Y H:i:s", strtotime($data['datentime']));
@@ -40,6 +50,8 @@
                         <b>Check in:</b> $checkin
                         <br>
                         <b>Check out:</b> $checkout
+                        <br>
+                        <b>Paid:</b> $data[total_pay]
                         <br>
                         <b>Date:</b> $date
                     </td>
@@ -79,7 +91,7 @@
     {
         $frm_data = filteration($_POST);
          $q = "UPDATE booking_order SET booking_status = ?, refund=? WHERE booking_id=?";
-         $val = ['canceled',0, $frm_data['booking_id']];
+         $val = ['cancelled',0, $frm_data['booking_id']];
          $res = update($q, $val, 'sii');
 
          echo $res;
@@ -87,70 +99,8 @@
     }
   
 
- 
-    // if(isset($_POST['remove_user'])){
-    //     $frm_data = filteration($_POST);
-       
-    //     $sql = "DELETE FROM taikhoanuser WHERE id=? AND is_verified=?";
-    //     $res = delete($sql, [$frm_data['user_id'],0], 'ii');
-
-    //     if($res){
-    //         echo 1;
-    //     }else{
-    //         echo 0;
-    //     }
-    // }
 
 
-    // if(isset($_POST['search_user'])){
-    //     $frm_data = filteration($_POST);
-    //     $q = "SELECT * FROM taikhoanuser WHERE name LIKE ?";
-    //     $res = select($q, ["%$frm_data[name]%"], 's');
-        
-    //     $i=1;
-    //     $path = USERS_IMG_PATH;
-
-    //     $data = "";
-
-    //     while($row = mysqli_fetch_assoc($res)){
-    //         $del_btn =  "<button type='button' onclick='remove_user($row[id])' class='btn btn-danger shadow-none btn-sm'>
-    //                         <i class='bi bi-trash'></i>
-    //                     </button>";
-    //         $verified ="<span class='badge bg-warning'><i class='bi bi-x-lg'></i></span>";
-
-    //         if($row['is_verified']){
-    //             $verified = "<span class='badge bg-success'><i class='bi bi-check-lg'></i></span>";
-    //             $del_btn ="";
-    //         }
-
-    //         $status = "<button onclick='toggle_status($row[id], 0)' class='btn btn-dark btn-sm shadow-none'>active</button>";
-    //         if(!$row['status']){
-    //             $status = "<button onclick='toggle_status($row[id], 1)' class='btn btn-danger btn-sm shadow-none'>inactive</button>";
-    //         }
-    //         $date = date("d-m-Y",strtotime($row['datentime']));
-            
-    //         $data.="
-    //             <tr class='align-middle'>
-    //                 <td>$i</td>
-    //                 <td>
-    //                     <img src='$path$row[profile]' width='55px'> <br>
-    //                     $row[name]
-    //                 </td>
-    //                 <td>$row[email]</td>
-    //                 <td>$row[phonenum]</td>
-    //                 <td>$row[address]   |   $row[pincode]</td> 
-    //                 <td>$row[dob]</td>
-    //                 <td>$verified</td>
-    //                 <td>$status</td>
-    //                 <td>$date</td>
-    //                 <td>$del_btn</td>
-
-    //             </tr>
-    //         ";
-    //         $i++;
-            
-    //     }
-    //     echo $data;
-    // }
+   
 
 ?>

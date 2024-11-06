@@ -18,7 +18,7 @@
     
         if(!isset($_GET['id']) || $settings_result['shutdown'] == true){
             redirect('rooms.php');
-        }else if(!(isset($_SESSION['login']) || $_SESSION['login'] == true)){
+        }else if(!(isset($_SESSION['login']) && $_SESSION['login'] == true)){
             redirect('rooms.php');
         }
         
@@ -176,7 +176,7 @@ include("inc/footer.php");
                     pay_info.innerText = "Check-in date is earlier than today's date!";
                 }else if(data.status == 'unavailable')
                 {
-                    pay_info.innerText = "Room not available!";
+                    pay_info.innerText = "Room is already booked for the selected dates. Please choose different dates or a different room.!";
                 }else
                 {
                     pay_info.innerHTML = "No. of Days: "+data.days +"<br>Total Amount: $"+data.payment;
