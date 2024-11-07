@@ -71,6 +71,42 @@
                     </form>
                 </div>           
             </div>
+
+            <div class="col-md-4 mb-5 px-4">
+                <div class="bg-white p-3 p-md-4 rounded shadow-sm">
+                    <form id="profile-form">
+                        <h5 class="mb-3 fw-bold">Picture</h5>
+                        <img src="<?php echo USERS_IMG_PATH.$u_fetch['profile'] ?>" class="rounded-circle img-fluid mb-3">
+
+                        <label class="form-label">New Picture</label>
+                        <input name="profile" type="file" accept=".jpg, .jpeg, .png, .webp" class="mb-4 form-control shadow-none" required> 
+            
+                        <button type="submit" class="btn text-white custom-bg shadow-none">Save Changes</button>
+                    </form>
+                </div>           
+            </div>
+
+            <div class="col-md-8 mb-5 px-4">
+                <div class="bg-white p-3 p-md-4 rounded shadow-sm">
+                    <form id="pass-form">
+                        <h5 class="mb-3 fw-bold">Change Password</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">New Password</label>
+                                <input type="password" name="new_pass" class="form-control shadow-none" required>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label">Confirm Password</label>
+                                <input type="password" name="confirm_pass" class="form-control shadow-none" required>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn text-white custom-bg shadow-none">Save Changes</button>
+                    </form>
+                </div>           
+            </div>
+
+
       
         </div>
     </div>
@@ -107,6 +143,87 @@ include("inc/footer.php");
                 alert('error', "No Changes Made!");
             }else{
                 alert('success', 'Changes Success')
+            }
+        };
+
+        xhr.send(data);
+    });
+
+    let profile_form = document.getElementById('profile-form');
+
+    profile_form.addEventListener('submit', (e)=>{
+        e.preventDefault();
+
+
+        let data = new FormData();
+
+        data.append('profile_form','');
+        data.append('profile',profile_form.elements['profile'].files[0]);
+        
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "ajax/profile.php", true);
+
+        xhr.onload = function () {
+
+            let response = this.responseText.trim();
+            console.log(response);
+
+            if(response === 'inv_img') {
+                alert('error', "Only JPG, WEBP & PNG images are allowed");
+            }
+            else if(response === 'upd_failed') {
+                alert('error', "Image upload failed");
+            }
+            else if(response == 0){
+                alert('error', "Updation failed!");
+            }
+            else{
+                window.location.href = window.location.pathname;
+            }
+        };
+
+        xhr.send(data);
+    });
+
+    let pass_form = document.getElementById('pass-form');
+    
+    pass_form.addEventListener('submit', (e)=>{
+        e.preventDefault();
+
+        let new_pass = pass_form.elements['new_pass'].value;
+        let confirm_pass = pass_form.elements['confirm_pass'].value;
+
+        if(new_pass != confirm_pass){
+            alert('error',"Password do not match!");
+            return false;
+        }
+
+
+        let data = new FormData();
+
+        data.append('pass_form','');
+        data.append('new_pass',new_pass);
+        data.append('confirm_pass',confirm_pass);
+        
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "ajax/profile.php", true);
+
+        xhr.onload = function () {
+
+            let response = this.responseText.trim();
+            //console.log(response);
+
+            if(response === 'mismatch') {
+                alert('error', "Password do not match!");
+            }
+            else if(response == 0){
+                alert('error', "Updation failed!");
+            }
+            else{
+                alert('success',"Changes Saved");
+                pass_form.reset();
             }
         };
 

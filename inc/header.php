@@ -30,7 +30,7 @@
               
               <div class="btn-group">
                 <button type="button" class="btn btn-outline-dark shadow-none dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
-                  <img src="$path$_SESSION[uPic]" style="width: 25px; height: 25px;" class="me-1">
+                  <img src="$path$_SESSION[uPic]" style="width: 25px; height: 25px;" class="me-1 rounded-circle">
                   $_SESSION[uName]
                 </button>
                 <ul class="dropdown-menu dropdown-menu-lg-end">
@@ -102,15 +102,15 @@
 
           <div class="container-fluid">
             <div class="row">
-            <div class="col-md-6 ps-0 mb-3">
+            <div class="col-md-6 mb-3">
               <label class="form-label">Name</label>
               <input name="name" type="text" class="form-control shadow-none" required> 
             </div>
-            <div class="col-md-6 ps-0 mb-3">
+            <div class="col-md-6 mb-3">
               <label class="form-label">Email</label>
               <input name="email" type="email" class="form-control shadow-none" required> 
             </div>
-            <div class="col-md-6 ps-0 mb-3">
+            <div class="col-md-6 mb-3">
               <label class="form-label">Phone number</label>
               <input name="phonenum" type="number" class="form-control shadow-none" required> 
             </div>
@@ -122,19 +122,19 @@
               <label class="form-label">Address</label>
               <textarea name="address" class="form-control shadow-none" rows="1" required></textarea>
             </div>
-            <div class="col-md-6 ps-0 mb-3">
+            <div class="col-md-6 mb-3">
               <label class="form-label">Pin code</label>
               <input name="pincode" type="text" class="form-control shadow-none" required> 
             </div>
-            <div class="col-md-6 p-0 mb-3">
+            <div class="col-md-6 mb-3">
               <label class="form-label">Date of birth</label>
               <input name="dob" type="date" class="form-control shadow-none" required> 
             </div>
-            <div class="col-md-6 ps-0 mb-3">
+            <div class="col-md-6 mb-3">
               <label class="form-label">Password</label>
               <input name="pass" type="password" class="form-control shadow-none" required> 
             </div>
-            <div class="col-md-6 p-0 mb-3">
+            <div class="col-md-6 mb-3">
               <label class="form-label">Confirm password</label>
               <input name="cpass" type="password" class="form-control shadow-none" required> 
             </div>  
@@ -158,9 +158,6 @@
           <button type="reset" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <span class="badge rounded-pill bg-light text-dark mb-3 text-wrap lh-base">
-            Note: A link will be sent to your email to reset your password!
-          </span>
           <div class="mb-3">
             <label class="form-label">Email / Phone number</label>
             <input type="email" name="email" class="form-control shadow-none" required>           

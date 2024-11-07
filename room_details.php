@@ -97,13 +97,28 @@
                                 <h4 class='mb-4'>$$room_data[price]</h4>
                             price;
 
+
+                            $rating_q ="SELECT AVG(rating) AS avg_rating FROM rating_review 
+                            WHERE room_id = '$room_data[id]' ORDER BY no DESC LIMIT 10";
+
+                            $rating_res = mysqli_query($conn, $rating_q);
+                            
+                            $rating_fetch = mysqli_fetch_assoc($rating_res);
+                            $rating_data = "";
+                            
+                            if($rating_fetch['avg_rating']!=NULL){
+                               
+                                for($i=0; $i<$rating_fetch['avg_rating']; $i++){
+                                    $rating_data .= "<i class='bi bi-star-fill text-warning'></i>";
+                                }
+                                
+                            }
+
+
                             #Star
                             echo<<< rating
                                 <div class="mb-3">
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                    <i class="bi bi-star-fill text-warning"></i>
+                                    $rating_data
                                 </div>
                             rating;
 
@@ -203,24 +218,50 @@
 
                 <div>
                     <h5 class="mb-3">Reviews & Ratings</h5>
-                    <div>
-                        <div class="profile d-flex align-items-center mb-2">
-                        <img src="images/features/man.svg" width="30px">
-                        <h6 class="m-0 ms-2">User 1</h6>
-                        </div>
-                        <p>
-                            Khách sạn có không gian sang trọng, hiện đại cùng với đội ngũ nhân viên phục vụ tận tâm, chu đáo. 
-                            Phòng ốc sạch sẽ, tiện nghi đầy đủ, mang đến cảm giác thoải mái và dễ chịu. 
-                            Đây chắc chắn là nơi nghỉ dưỡng lý tưởng cho những ai muốn trải nghiệm dịch vụ cao cấp.
-                        
-                        </p>
-                        <div class="rating">
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                        </div>
-                    </div>
+                    <?php
+                        $review_sql = "SELECT rr.*, uc.name AS uname,uc.profile, r.name AS rname FROM rating_review rr
+                                        INNER JOIN taikhoanuser uc ON rr.user_id = uc.id
+                                        INNER JOIN rooms r ON rr.room_id = r.id
+                                        WHERE rr.room_id = '$room_data[id]'
+                                        ORDER BY no DESC LIMIT 20";
+
+                        $review_res = mysqli_query($conn, $review_sql);
+                        $img_path = USERS_IMG_PATH;
+
+                        if(mysqli_num_rows($review_res)==0)
+                        {
+                            echo 'No reviews yet';
+                        }else
+                        {
+                            while($row =mysqli_fetch_assoc($review_res)){
+                                $stars = "<i class='bi bi-star-fill text-warning'></i> ";
+                                    for($i = 1; $i < $row['rating'];  $i++){
+                                        $stars .= " <i class='bi bi-star-fill text-warning'></i>";
+                                    }
+                                echo<<<review
+                                     <div class='mb-4'>
+                                        <div class="d-flex align-items-center mb-2">
+                                        <img src="$img_path$row[profile]" class='rounded-circle' loading-lazy width="30px">
+                                        <h6 class="m-0 ms-2">$row[uname]</h6>
+                                        </div>
+                                        <p class='mb-1'>
+                                            $row[review]
+                                        </p>
+                                        <div class="rating">
+                                            $stars
+                                        </div>
+                                    </div>
+
+                                review;
+                            }
+                        }
+
+                    ?>
+
+
+
+
+                   
                 </div>
             </div>
         </div>

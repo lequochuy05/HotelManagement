@@ -126,19 +126,26 @@
             //console.log(responseText);
             if(responseText === 'pass_mismatch') {
                 alert('error', "Password Mismatch");
-            } else if(responseText === 'email_already') {
+            } 
+            else if(responseText === 'email_already') {
                 alert('error', "Email is already registered!");
-            } else if(responseText === 'phone_already') {
+            } 
+            else if(responseText === 'phone_already') {
                 alert('error', "Phone number is already registered!");
-            } else if(responseText === 'inv_img') {
+            } 
+            else if(responseText === 'inv_img') {
                 alert('error', "Only JPG, WEBP & PNG images are allowed");
-            } else if(responseText === 'upd_img') {
+            } 
+            else if(responseText === 'upd_failed') {
                 alert('error', "Image upload failed");
-            } else if(responseText === 'mail_failed') {
+            } 
+            else if(responseText === 'mail_failed') {
                 alert('error', "Cannot send confirm email! Server Down!");
-            } else if(responseText === 'ins_failed') {
+            } 
+            else if(responseText === 'ins_failed') {
                 alert('error', "Registration failed! Server Down!");
-            } else {
+            } 
+            else {
                 alert('success', "Registration successful. Confirmation link sent to email!");
                 register_form.reset();
                 

@@ -49,6 +49,9 @@
                             <a class="nav-link text-white" href="user_queries.php">User Query</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-white" href="rate_review.php">Rating & Review</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-white" href="settings.php">Setting</a>
                         </li>
                         

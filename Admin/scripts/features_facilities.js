@@ -31,7 +31,7 @@ function add_feature() {
   };
   xhr.send(data);
 }
-
+function get_features() {
   let xhr = new XMLHttpRequest();
   xhr.open("POST", "ajax/features_facilities.php", true);
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
