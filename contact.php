@@ -98,7 +98,7 @@
                             <label class="form-label" style="font-weight: 500;">Message</label>
                             <textarea name="message" required class="form-control shadow-none" rows="5" style="resize: none;"></textarea>           
                         </div>
-                        <button type="submit" name="send" class="btn text-white shadow-none mt-3">SEND</button>
+                        <button type="submit" name="send" class="btn custom-bg text-white shadow-none mt-3">SEND</button>
                     </form>
                 </div>
             </div>

@@ -1,5 +1,6 @@
 <?php
     require("inc/essentials.php");
+    require("inc/dbconfig.php");
     adminLogin();
 ?>
 
@@ -18,16 +19,213 @@
 </head>
 <body class="bg-light">
    
-    <?php require("inc/header.php") ?>
+    <?php require("inc/header.php");
+
+        $is_shutdown = mysqli_fetch_assoc(mysqli_query($conn,"SELECT shutdown FROM settings"));
+
+        $current_bookings = mysqli_fetch_assoc(mysqli_query($conn,"SELECT 
+                            COUNT(CASE WHEN booking_status = 'booked' AND arrival=0 THEN 1 END) AS 'new_bookings',
+                            COUNT(CASE WHEN booking_status = 'cancelled' AND refund=0 THEN 1 END) AS 'refund_bookings'
+                            FROM booking_order "));
+
+        $unread_queries = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(no) AS 'count' FROM user_queries WHERE seen = 0"));
+        $unread_review = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(no) AS 'count' FROM rating_review WHERE seen = 0"));
+
+        $current_users = mysqli_fetch_assoc(mysqli_query($conn,"SELECT
+                        COUNT(id) AS 'total',
+                        COUNT(CASE WHEN status = 1 THEN 1 END) AS 'active',
+                        COUNT(CASE WHEN status = 0 THEN 1 END) AS 'inactive',
+                        COUNT(CASE WHEN is_verified = 0 THEN 1 END) AS 'unverified'
+                        FROM taikhoanuser "));
+
+
+
+
+    ?>
 
     <div class="container-fluid" id="main-content">
         <div class="row">
             <div class="col-lg-10 ms-auto p-4 overflow-hidden">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias, fugiat voluptatibus sunt quibusdam commodi beatae suscipit vitae magnam nulla repellendus doloribus velit sed, nemo ex qui molestiae. Enim commodi perspiciatis ea atque hic aut vel minima fugit optio ex assumenda quibusdam, officiis, maiores ut in. Culpa adipisci quam numquam ullam accusamus corporis aperiam consequatur iste provident nulla! Nihil vitae dolore iste eveniet magni soluta ea, consequuntur sint eligendi deserunt tempore sapiente adipisci cupiditate at saepe delectus distinctio culpa quidem laborum pariatur, quae iure ratione optio! Earum asperiores natus unde, accusantium, optio perferendis labore assumenda nesciunt maiores laudantium nihil mollitia ipsam quibusdam quia alias, eveniet voluptate facilis odio! Et sunt fugiat dolores doloremque? Corrupti velit et dignissimos! Repellat consequatur deleniti iure perferendis rerum impedit ut eveniet natus harum quas blanditiis officia obcaecati error aliquid expedita, reprehenderit illo dolorum assumenda eligendi, sit voluptatibus? A reiciendis, consequuntur iure ratione sunt excepturi quis doloremque laboriosam illum. Unde, molestias! Aperiam ad libero dignissimos accusamus odit ratione aliquid laboriosam similique aspernatur repellendus provident placeat autem atque consequatur sit quae saepe rem, quos error hic a. Officiis assumenda in vero veniam quas, beatae placeat accusantium quae autem quibusdam facere non delectus enim impedit reiciendis eos maiores, voluptates optio quo veritatis velit vitae at dolores? Explicabo, vel minima! In, iusto. Fugit illum perspiciatis dolorem magnam officia commodi corporis nobis nisi, unde est, cumque ratione recusandae debitis dignissimos eum deleniti porro alias aperiam esse a qui doloremque atque tempore. Quaerat quod animi laboriosam est quisquam assumenda aspernatur velit modi, nobis rerum vitae, esse, vero natus. Accusantium ab blanditiis sit exercitationem in vero laboriosam nisi harum excepturi nihil quisquam perferendis consectetur magni obcaecati, fugiat soluta accusamus neque distinctio facilis! Consectetur sed aspernatur blanditiis! Molestiae rem odio aut suscipit reprehenderit exercitationem, obcaecati, debitis, eius autem voluptate mollitia? Atque explicabo cum voluptatibus mollitia deserunt sed maxime, repudiandae corrupti aliquam at. Consequatur libero earum dolorum quia nihil sunt deserunt non vero, tenetur reiciendis aliquam, officia magni obcaecati autem enim ratione omnis voluptas similique doloremque cupiditate minima perspiciatis? Laboriosam, commodima consequatur eos sint aperiam amet id quaerat! Nam dolor quia repellendus quam  eveniet quae deleniti cupiditate eaque s q
-                Perferendis commodi cum ex culpa quia nulla soluta odit doloremque ratione accusantium totam unde, ut, deserunt modi quod, vitae molestiae consequatur repudiandae inventore ipsam? Alias quo voluptas molestias vitae? Accusantium vero delectus, necessitatibus adipisci sunt deleniti voluptas minus harum veniam autem, doloremque quam quas velit ex consectetur debitis laudantium ad eaque rem illo fuga dolorum exercitationem? At hic ipsam cum nesciunt quae illo enim, voluptas provident soluta non quisquam vitae repudiandae esse doloremque! Accusamus quasi totam ducimus temporibus numquam porro, laborum, nostrum, expedita non obcaecati veniam eligendi repudiandae ullam atque. Harum beatae illum exercitationem aliquam repellat sapiente voluptas fugiat, velit sed officia ab aspernatur ipsum quam, nulla dolorum debitis reiciendis minus dolor natus reprehenderit. Fugiat deserunt magni sequi error modi quis consequatur, pariatur enim explicabo deleniti delectus quaerat, quisquam laudantium earum optio ipsa nobis vero corporis nostrum omnis asperiores neque dolore quo accusantium. Beatae in illum, corporis, temporibus quos natus voluptatibus voluptatum aspernatur fugiat ea sapiente maxime repellat! Odio quidem perspiciatis eos soluta officia veniam sint vero aliquid laudantium! Corporis dolorum animi tempora reiciendis, error ipsum repellat neque recusandae omnis et commodi molestiae, at cum perspiciatis itaque earum mollitia temporibus, reprehenderit debitis sint. Ab non qui est nostrum obcaecati error saepe suscipit, harum soluta, tenetur porro aperiam perferendis laudantium quisquam vitae. Quis, error quia minus similique sed at voluptatem aperiam tempora animi?
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h3>DASHBOARD</h3>
+                    <?php 
+                        if($is_shutdown['shutdown']){
+                            echo<<<data
+                                <h6 class="badge bg-danger py-2 rounded">Shutdown Mode is Active!</h6>
+                            data;
+                        }
+                    ?>
+                    
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-md-3 mb-4">
+                        <a href="new_bookings.php" class="text-decoration-none">
+                            <div class="card text-center text-success p-3">
+                                <h6>New Bookings</h6>
+                                <h1 class="mt-2 mb-0"><?php echo $current_bookings['new_bookings'] ?></h1>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-md-3 mb-4">
+                        <a href="refund_bookings.php" class="text-decoration-none">
+                            <div class="card text-center text-warning p-3">
+                                <h6>Refund Bookings</h6>
+                                <h1 class="mt-2 mb-0"><?php echo $current_bookings['refund_bookings'] ?></h1>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-md-3 mb-4">
+                        <a href="user_queries.php" class="text-decoration-none">
+                            <div class="card text-center text-info p-3">
+                                <h6>User Queries</h6>
+                                <h1 class="mt-2 mb-0"><?php echo $unread_queries['count'] ?></h1>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="col-md-3 mb-4">
+                        <a href="rate_review.php" class="text-decoration-none">
+                            <div class="card text-center text-info p-3">
+                                <h6>Rating & Review</h6>
+                                <h1 class="mt-2 mb-0"><?php echo $unread_review['count'] ?></h1>
+                            </div>
+                        </a>
+                    </div>
+
+
+
+
+                </div>
+
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h3>Booking Analytics</h3>
+                    <select class="form-select shadow-none bg-light w-auto" onchange="booking_analytics(this.value)">
+                        <option value="1">Past 30 Days</option>
+                        <option value="2">Past 90 Days</option>
+                        <option value="3">Past 1 Years</option>
+                        <option value="4">All time</option>
+                    </select>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-3 mb-4">
+                        <div class="card text-center text-success p-3">
+                            <h6>Total Bookings</h6>
+                            <h1 class="mt-2 mb-0" id="total_bookings"></h1>
+                            <h4 class="mt-2 mb-0" id="total_amt"></h4>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 mb-4">
+                        <div class="card text-center text-success p-3">
+                            <h6>Active Bookings</h6>
+                            <h1 class="mt-2 mb-0" id="active_bookings"></h1>
+                            <h4 class="mt-2 mb-0" id="active_amt"></h4>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 mb-4">
+                        <div class="card text-center text-primary p-3">
+                            <h6>Cancelled Bookings</h6>
+                            <h1 class="mt-2 mb-0" id="cancelled_bookings"></h1>
+                            <h4 class="mt-2 mb-0" id="cancelled_amt"></h4>
+                        </div>
+                    </div>
+
+
+
+                    
+
+
+
+
+                </div>
+
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h3>User, Queries, Review Analytics</h3>
+                    <select class="form-select shadow-none bg-light w-auto" onchange="user_analytics(this.value)">
+                        <option value="1">Past 30 Days</option>
+                        <option value="2">Past 90 Days</option>
+                        <option value="3">Past 1 Years</option>
+                        <option value="4">All time</option>
+                    </select>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-3 mb-4">
+                        <div class="card text-center text-success p-3">
+                            <h6>New Registration</h6>
+                            <h1 class="mt-2 mb-0" id="total_new_reg"></h1>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 mb-4">
+                        <div class="card text-center text-primary p-3">
+                            <h6>Queries</h6>
+                            <h1 class="mt-2 mb-0" id="total_queries"></h1>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 mb-4">
+                        <div class="card text-center text-danger p-3">
+                            <h6>Reviews</h6>
+                            <h1 class="mt-2 mb-0" id="total_reviews"></h1>
+                        </div>
+                    </div>
+
+
+
+                    
+
+
+
+
+                </div>
+
+                <h5>Users</h5>
+
+                <div class="row mb-3">
+                    <div class="col-md-3 mb-4">
+                        <div class="card text-center text-primary p-3">
+                            <h6>Total</h6>
+                            <h1 class="mt-2 mb-0"><?php echo $current_users['total'] ?></h1>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 mb-4">
+                        <div class="card text-center text-warning p-3">
+                            <h6>Active</h6>
+                            <h1 class="mt-2 mb-0"><?php echo $current_users['active'] ?></h1>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 mb-4">
+                        <div class="card text-center text-danger p-3">
+                            <h6>Inactive</h6>
+                            <h1 class="mt-2 mb-0"><?php echo $current_users['inactive'] ?></h1>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 mb-4">
+                        <div class="card text-center text-info p-3">
+                            <h6>Unverified</h6>
+                            <h1 class="mt-2 mb-0"><?php echo $current_users['unverified'] ?></h1>
+                        </div>
+                    </div>
+
+                    
+
+
+
+
+                </div>
             </div>
         </div>
     </div>
-
+    
+    <script src="scripts/dashboard.js"></script>
 </body>
 </html>

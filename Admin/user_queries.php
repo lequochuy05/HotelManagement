@@ -90,7 +90,9 @@
                                         $sql = "SELECT * FROM user_queries ORDER BY no DESC";
                                         $data = mysqli_query($conn, $sql);
                                         $i = 1;
+                                        
                                         while($row = mysqli_fetch_assoc($data)){
+                                            $date = Date("d-m-Y",strtotime($row['datentime']));
                                             $seen = '';
                                             if($row['seen']!=1){
                                                 $seen = "<a href='?seen=$row[no]' class='btn btn-sm rounded-pill btn-primary'>Mark as read</a> <br>";
@@ -104,7 +106,7 @@
                                                     <td>$row[email]</td>
                                                     <td>$row[subject]</td>
                                                     <td>$row[message]</td>
-                                                    <td>$row[date]</td>
+                                                    <td>$date</td>
                                                     <td>$seen</td>
                                                 </tr>
                                             query;

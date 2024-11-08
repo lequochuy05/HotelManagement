@@ -1,59 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+</head>
 
-<div class="container-fluid bg-white mt-5">
-    <div class="row">
-        <div class="col-lg-4 p-4">
-            <h3 class="h-font fw-bold fs-3 mb-2"><?php echo $settings_result['site_title'] ?></h3>
-            <p>
-                <?php echo $settings_result['site_about'] ?>
-            </p>
-        </div>
-        <div class="col-lg-4 p-4">
-            <h5 class="mb-3">Links</h5>
-            <a href="index.php" class="d-inline-block mb-2 text-dark text-decoration-none">Home</a> <br>
-            <a href="rooms.php" class="d-inline-block mb-2 text-dark text-decoration-none">Rooms</a> <br>
-            <a href="facilities.php" class="d-inline-block mb-2 text-dark text-decoration-none">Facilities</a> <br>
-            <a href="contact.php" class="d-inline-block mb-2 text-dark text-decoration-none">Contact Us</a> <br>
-            <a href="about.php" class="d-inline-block mb-2 text-dark text-decoration-none">About</a>
-        </div>
-        <div class="col-lg-4 p-4">
-            <h5 class="mb-3">Follow Us</h5>
-                <?php
-                    if($contact_result['tw']!= ''){
-                        echo<<<data
-                            <a href="$contact_result[tw]" class="d-inline-block mb-1 text-decoration-none">
-                                <span class="badge bg-light text-dark fs-6 p-2">
-                                    <i class="bi bi-twitter me-1"></i> Twitter
-                                </span>
-                            </a>                                                         
-                        data;
-                    }
-                ?>
+<body>
 
-               
-                <br>
-                <a href="<?php echo $contact_result['ig'] ?>" class="d-inline-block mb-1 text-decoration-none">
-                    <span class="badge bg-light text-dark fs-6 p-2">
-                        <i class="bi bi-instagram me-1"></i> Instagram
-                    </span>
-                </a>
-                <br>
-                <a href="<?php echo $contact_result['fb'] ?>" class="d-inline-block mb-1 text-decoration-none">
-                    <span class="badge bg-light text-dark fs-6 p-2">
-                        <i class="bi bi-facebook me-1"></i> Facebook
-                    </span>
-                </a>
-                <br>
-                <a href="<?php echo $contact_result['tt'] ?>" class="d-inline-block mb-1 text-decoration-none">
-                    <span class="badge bg-light text-dark fs-6 p-2">
-                        <i class="bi bi-tiktok me-1"></i> TikTok
-                    </span>
-                </a>
-           
+<!-- Footer -->
+<footer class="bg-light text-dark py-5">
+    <div class="container">
+        <div class="row gy-4">
+            <!-- Contact Section -->
+            <div class="col-lg-3">
+                <h4 class="fw-bold mb-3">Liên Hệ</h4>
+                <ul class="list-unstyled">
+                    <li><i class="fa-solid fa-house me-2"></i>470 Đ. Trần Đại Nghĩa, Khu đô thị, Ngũ Hành Sơn, Đà Nẵng</li>
+                    <li><i class="fa-solid fa-phone me-2"></i>0706163387</li>
+                    <li><i class="fa-solid fa-envelope me-2"></i>lehuy2425@gmail.com</li>
+                </ul>
+            </div>
+
+            <!-- Navigation Links -->
+            <div class="col-lg-2">
+                <h5>Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="index.php" class="text-dark text-decoration-none">Home</a></li>
+                    <li><a href="rooms.php" class="text-dark text-decoration-none">Rooms</a></li>
+                    <li><a href="facilities.php" class="text-dark text-decoration-none">Facilities</a></li>
+                    <li><a href="contact.php" class="text-dark text-decoration-none">Contact Us</a></li>
+                    <li><a href="about.php" class="text-dark text-decoration-none">About</a></li>
+                </ul>
+            </div>
+
+            <!-- Help Section -->
+            <div class="col-lg-3">
+                <h5>Được giúp đỡ</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-dark text-decoration-none">QHUY</a></li>
+                    <li><a href="#" class="text-dark text-decoration-none">APPLE INC</a></li>
+                    <li><a href="#" class="text-dark text-decoration-none">SAUDI ARAMCO</a></li>
+                    <li><a href="#" class="text-dark text-decoration-none">MICROSOFT CORP</a></li>
+                </ul>
+            </div>
+
+            <!-- Branches -->
+            <div class="col-lg-2">
+                <h5>Chi Nhánh</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-dark text-decoration-none">Đà Nẵng</a></li>
+                    <li><a href="#" class="text-dark text-decoration-none">TP Hồ Chí Minh</a></li>
+                    <li><a href="#" class="text-dark text-decoration-none">Hà Nội</a></li>
+                    <li><a href="#" class="text-dark text-decoration-none">Hải Phòng</a></li>
+                    <li><a href="#" class="text-dark text-decoration-none">Cần Thơ</a></li>
+                </ul>
+            </div>
+
+            <!-- Social Links -->
+            <div class="col-lg-2">
+                <h5>Theo dõi</h5>
+                <div class="d-flex gap-2">
+                    <a href="<?php echo $contact_result['tw']; ?>" class="btn btn-outline-dark rounded-circle"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="<?php echo $contact_result['fb']; ?>" class="btn btn-outline-dark rounded-circle"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="<?php echo $contact_result['ig']; ?>" class="btn btn-outline-dark rounded-circle"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="<?php echo $contact_result['tt']; ?>" class="btn btn-outline-dark rounded-circle"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
         </div>
     </div>
+</footer>
+
+<!-- Footer Bottom -->
+<div class="bg-dark text-white text-center py-2">
+    <small><i class="bi bi-c-circle"></i> By Quốc Huy</small>
 </div>
 
-<h6 class="text-center bg-dark text-white p-3 m-0"><i class="bi bi-c-circle"></i> By Quốc Huy</h6>
+</body>
+</html>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 <script>
