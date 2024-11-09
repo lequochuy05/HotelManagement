@@ -26,21 +26,21 @@
     
     <div class="container">
         <div class="row justify-content-between align-items-center">
-            <div class="col-lg-6 col-md-5 mb-4 order-lg-1 order-2">
+            <div class="col-lg-6 col-md-5 mb-4 order-lg-1 order-2 text">
                 <h3 class="mb-3">President XQuocHuy</h3>
                 <p> He is an attractive man with a refined appearance and a warm smile. ;
                     His friendliness and approachability always make people around him feel comfortable and happy to chat. 
                     Not only is he handsome, he also has a confident style, delicate gestures, creating a natural charm. 
                     Wherever he is, he easily connects and builds good relationships with everyone.</p>
             </div>
-            <div class="col-lg-5 col-md-5 mb-4 order-lg-2 order-1">
+            <div class="col-lg-5 col-md-5 mb-4 order-lg-2 order-1 img">
                 <img src="images/about/1.png" class="w-100" style="border-radius: 2px">
             </div>
         </div>
     </div>
 
     <div class="container mt-5">
-        <div class="row">
+        <div class="row card1">
             <div class="col-lg-3 col-md-6 mb-5 px-4">
                 <div class="bg-white rounded shadow p-4 border-top border-4 text-center box">
                     <img src="images/about/hotel.svg" width="70px">
@@ -71,7 +71,7 @@
 
     <h3 class="my-5 fw-bold h-font text-center">MANAGEMENT</h3>
     <div class="container px-4">
-        <div class="swiper mySwiper">
+        <div class="swiper mySwiper mana1">
             <div class="swiper-wrapper mb-5">
                 <div class="swiper-slide bg-white text-center overflow-hidden rounded">
                     <img src="images/about/2.jpg" class="w-100">
@@ -113,6 +113,22 @@ include_once("inc/footer.php");
 ?>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
+
+    ScrollReveal({
+        reset: true,
+        distance: "80px",
+        duration: 1000,
+        delay: 200,
+    });
+    ScrollReveal().reveal('.mana1', { origin: "top" });
+    ScrollReveal().reveal('.card1', {
+        origin: 'bottom',
+        interval: 200, 
+    });
+    ScrollReveal().reveal('.text', { origin: "left" });
+    ScrollReveal().reveal('.img', { origin: "right" });   
+
+
     var swiper = new Swiper(".mySwiper", {
         slidesPerView: 4,
         spaceBetween: 40,

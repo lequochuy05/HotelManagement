@@ -11,7 +11,7 @@
 
 <!-- Footer -->
 <footer class="bg-light text-dark py-5">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row gy-4">
             <!-- Contact Section -->
             <div class="col-lg-3">

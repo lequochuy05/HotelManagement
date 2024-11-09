@@ -184,7 +184,7 @@
 
                 #print room cards
                 echo<<<data
-                    <div class="col-lg-4 col-md-6 my-3">
+                    <div class="col-lg-4 col-md-6 my-3 card1">
                         <div class="card border-0 shadow" style="max-width: 350px; margin: auto;">
                         <img src="$room_thumb" class="card-img-top">
                             <div class="card-body">
@@ -227,7 +227,7 @@
 
 <!-- Facilities -->
 <h2 class="mt-5 pt-4 mb-4 text-center fw-bold h-font">OUR FACILITIES</h2>
-<div class="container">
+<div class="container con-fac">
     <div class="row justify-content-evenly px-lg-0 px-md-0 px-5">
         <?php
             $result = mysqli_query($conn, "SELECT * FROM facilities ORDER BY id DESC LIMIT 5");
@@ -434,7 +434,23 @@ include_once("inc/footer.php");
     }
 ?>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+
 <script>
+    ScrollReveal({
+        reset: true,
+        distance: "80px",
+        duration: 1000,
+        delay: 200,
+    });
+    ScrollReveal().reveal('.con-fac', { origin: "top" });
+    ScrollReveal().reveal('.card1', {
+        origin: 'bottom',
+        interval: 200, 
+    });
+    ScrollReveal().reveal('.container', { origin: "left" });   
+
+
     var swiper = new Swiper(".swiper-container", {
       spaceBetween: 30,
       effect: "fade",
