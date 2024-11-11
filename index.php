@@ -7,7 +7,7 @@
     <link rel="Shortcut icon" href="images/logo.png">
    
     <?php   
-        require_once("inc/links.php"); 
+        require("inc/links.php"); 
     ?>
      <title><?php echo $settings_result['site_title'] ?></title>
     <link rel="stylesheet" href="Css/common.css">
@@ -46,7 +46,7 @@
 
 <div class="container availability-form">
     <div class="row">
-        <div class="col-lg-12 bg-white shadow p-4 rounded">
+        <div class="col-lg-12 bg-white shadow p-4 rounded search">
             <h5 class="mb-4">Check Booking Availability</h5>
             <form action="rooms.php">
                 <div class="row">
@@ -86,7 +86,7 @@
                     </div>
                     <input type="hidden" name="check_availability">
                     <div class="col-lg-1 mb-lg-3 mt-2">
-                        <button type="submit" class="btn text-white shadow-none custom-bg" style="background-color: #2ec1ac;">Submit</button>
+                        <button type="submit" class="btn text-white shadow-none custom-bg">Search</button>
                     </div>
                 </div>
             </form>
@@ -419,8 +419,7 @@ include_once("inc/footer.php");
             echo<<<showModal
                 <script>
                     var myModal = document.getElementById('recoveryModal');
-                    
-                    
+    
                     myModal.querySelector("input[name='email']").value = '$data[email]';
                     myModal.querySelector("input[name='token']").value = '$data[token]';
    
@@ -443,7 +442,7 @@ include_once("inc/footer.php");
         duration: 1000,
         delay: 200,
     });
-    ScrollReveal().reveal('.con-fac', { origin: "top" });
+    ScrollReveal().reveal('search .con-fac', { origin: "top" });
     ScrollReveal().reveal('.card1', {
         origin: 'bottom',
         interval: 200, 

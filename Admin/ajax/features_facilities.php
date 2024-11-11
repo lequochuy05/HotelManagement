@@ -45,7 +45,8 @@
             $result = delete($sql, $values, 'i');
             echo $result; 
         }else{
-            echo 'room_added';
+            echo trim('room_added');
+
         }
     
     }
@@ -111,10 +112,7 @@
                 echo 0;
             }
         }else{
-            echo "room_added";
-        }
+            echo trim('room_added');
 
-       
-  
+        }
     }
-?>

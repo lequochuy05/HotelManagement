@@ -45,7 +45,6 @@
                                     </tr>
                                 </thead>
                                 <tbody id="features-data">
-                                   
                                 </tbody>
                             </table>
                         </div>
@@ -75,7 +74,6 @@
                                     </tr>
                                 </thead>
                                 <tbody id="facilities-data">
-                                   
                                 </tbody>
                             </table>
                         </div>

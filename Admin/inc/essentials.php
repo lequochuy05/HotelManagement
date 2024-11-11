@@ -17,9 +17,9 @@
         define('USERS_FOLDER','users/');
         
 
-        define('SENDGRID_API_KEY',"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");
+        define('SENDGRID_API_KEY',"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");
         define('SENDGRID_EMAIL',"lehuy2425@gmail.com");
-        define('SENDGRID_NAME',"ONIX_WEB");
+        define('SENDGRID_NAME',"WEBSITE_ONIX");
 
 
     function adminLogin(){

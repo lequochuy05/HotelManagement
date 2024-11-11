@@ -48,10 +48,11 @@ function rem_feature(val) {
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
   xhr.onload = function () {
-    if (this.responseText == 1) {
+    let response = this.responseText.trim();
+    if (response == 1) {
       alert("success", "Feature Removed!");
       get_features();
-    } else if (this.responseText.trim == "room_added") {
+    } else if (response == "room_added") {
       alert("error", "Feature is added in room!");
     } else {
       alert("error", "Server Down!");

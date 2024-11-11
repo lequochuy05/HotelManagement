@@ -104,9 +104,7 @@
             </div>
 
             <div class="col-lg-9 col-md-12 px-4 card1" id="rooms-data">
-                <div class="spinner-border text-info mb-3 mx-auto d-block">
-
-                </div>
+                
             </div>
         </div>
     </div>
@@ -122,7 +120,8 @@
     });
     ScrollReveal().reveal('.card1', {
         origin: 'bottom',
-        interval: 200, 
+        reset: false
+        
     });
 
 
