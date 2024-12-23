@@ -47,7 +47,7 @@
 <div class="container availability-form">
     <div class="row">
         <div class="col-lg-12 bg-white shadow p-4 rounded search">
-            <h5 class="mb-4">Check Booking Availability</h5>
+            <h5 class="mb-4">Check Availability</h5>
             <form action="rooms.php">
                 <div class="row">
                     <div class="col-lg-3">
@@ -251,7 +251,7 @@
 </div>
 
 <!-- Testimonials -->
-<h2 class="mt-5 pt-4 mb-4 text-center fw-bold h-font">TESTIMONIALS</h2>
+<h2 class="mt-5 pt-4 mb-4 text-center fw-bold h-font">REVIEWS</h2>
 <div class="container">
     <div class="swiper swiper-testimonials">
         <div class="swiper-wrapper md-5">

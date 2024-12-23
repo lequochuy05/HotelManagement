@@ -2,24 +2,20 @@
         
         define('SITE_URL', 'http://localhost/HotelManagement/');
         define('ABOUT_IMG_PATH',SITE_URL.'images/about/');
-        // define('CAROUSEL_IMG_PATH', SITE_URL.'images/carousel');
-        // define('FEATURES_IMG_PATH', SITE_URL.'images/features/');
         define('FACILITIES_IMG_PATH', SITE_URL.'images/facilities/');
         define('ROOMS_IMG_PATH', SITE_URL.'images/rooms/');
         define('USERS_IMG_PATH', SITE_URL.'images/users/');
 
         define('UPLOAD_IMAGE_PATH', $_SERVER['DOCUMENT_ROOT'].'/HotelManagement/images/');
         define('ABOUT_FOLDER','about/');
-        // define('CAROUSEL_FOLDER','carousel/');
-        // define('FEATURES_FOLDER','features/');
         define('FACILITIES_FOLDER','facilities/');
         define('ROOMS_FOLDER','rooms/');
         define('USERS_FOLDER','users/');
         
 
-        define('SENDGRID_API_KEY',"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");
+        define('SENDGRID_API_KEY',"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");
         define('SENDGRID_EMAIL',"lehuy2425@gmail.com");
-        define('SENDGRID_NAME',"WEBSITE_ONIX");
+        define('SENDGRID_NAME',"ONIX_WEB");
 
 
     function adminLogin(){

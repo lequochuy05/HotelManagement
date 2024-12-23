@@ -31,7 +31,7 @@
               <div class="btn-group">
                 <button type="button" class="btn btn-outline-dark shadow-none dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
                   <img src="$path$_SESSION[uPic]" style="width: 25px; height: 25px;" class="me-1 rounded-circle">
-                  $_SESSION[uName]
+                  Xin chào, $_SESSION[uName]
                 </button>
                 <ul class="dropdown-menu dropdown-menu-lg-end">
                   <li><a class="dropdown-item" href="profile.php">Profile</a></li>
@@ -158,8 +158,11 @@
           <button type="reset" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
+        <span class="badge rounded-pill bg-light text-dark mb-3 text-wrap lh-base">
+          Note: Enter registered email to retrieve password
+        </span>
           <div class="mb-3">
-            <label class="form-label">Email / Phone number</label>
+            <label class="form-label">Email</label>
             <input type="email" name="email" class="form-control shadow-none" required>           
           </div>
         

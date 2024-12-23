@@ -115,10 +115,11 @@ function rem_facility(val) {
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
   xhr.onload = function () {
-    if (this.responseText == 1) {
+    let response = this.responseText.trim();
+    if (response == 1) {
       alert("success", "Facility Removed!");
       get_facilities();
-    } else if (this.responseText == "room_added") {
+    } else if (response == "room_added") {
       alert("error", "Facility is added in room!");
     } else {
       alert("error", "Server Down");
