@@ -34,7 +34,7 @@ Người dùng có thể tìm kiếm khách sạn theo vị trí, chọn ngày n
    git clone [https://github.com/lequochuy05/HotelManagement](https://github.com/lequochuy05/HotelManagement.git)
 2. Giải nén tệp vào XamPP -> htdocs
 3. Chạy XamPP -> run Apache và database -> run với quyền Admin trong MySql -> Tại trang chủ ta vào import -> choose file (chọn file hotelmanagement.sql đã có trong thư mục đã giải nén
-4. Truy cập Google -> Tìm kiếm [HotelBooking/](http://localhost/HotelManagement/)
+4. Truy cập Google -> Tìm kiếm [HotelBooking](http://localhost/HotelManagement/)
 
 ---
 
