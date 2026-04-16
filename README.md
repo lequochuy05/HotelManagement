@@ -116,7 +116,7 @@ To access the administration panel:
 
 ## 📧 Contact & Support
 
-**Author**: Wuchuy 
+**Author**: Wuchuy </br>
 **Email**: [wuchuy05.dev@gmail.com](mailto:wuchuy.dev@gmail.com)  
 
 ---
